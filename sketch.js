@@ -24,9 +24,9 @@ function setup(){
     createCanvas(400,700);
     umbrella = new Umbrella(200,500);
 
-    if(frameCount % 200===0){
+    if(frameCount % 300===0){
         for(var i=0;i<maxDrop;i++){
-            drops.push(new Waterdrop (random(0,400)),(random(0,400)));
+            drops.push(new Waterdrop (random(0,400),random(0,400)));
         }
     }
 }
@@ -36,9 +36,10 @@ function draw(){
     background(0); 
     
     if(frameCount % 100===0){
-        thunder=createSprite(200,500);
-
-        var rand=Math.round(random(1,6));
+        thunder = createSprite(random(10,370), random(10,30), 10, 10);
+        thunderCreatedFrame=frameCount;
+        
+        var rand=Math.round(random(1,4));
             switch(rand){
                 case 1: thunder.addImage(thunder1);
                 break;
@@ -50,15 +51,20 @@ function draw(){
                 break;
                 default:break;
             }
+            thunder.scale=random(0.3,0.5);
     }
-    
+    if(thunderCreatedFrame+10 === frameCount && thunder){
+        thunder.destroy();
+    }
    
 
     umbrella.display();
+    
     for(var i=0;i<maxDrop;i++){
         drops[i].display();
+        drops[i].update();
     }
 
- 
+  drawSprites()
 }   
 
